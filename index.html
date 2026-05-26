@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>床奇手工床墊 - 睡感探索 V20 (圖文導購版)</title>
+    <title>床奇手工床墊 - 你適合睡軟床還硬床？</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,11 +20,11 @@
 
         body {
             font-family: var(--font-body);
-            background-color: var(--bg-color);
+            background-color: var(--card-bg); /* 背景與卡片同色，消弭邊界感 */
             color: var(--text-main);
             display: flex;
             justify-content: center;
-            padding: 20px 10px;
+            padding: 0; /* 移除原本的 padding 讓首圖貼齊邊緣 */
             margin: 0;
             box-sizing: border-box;
         }
@@ -33,21 +33,28 @@
             max-width: 800px;
             width: 100%;
             background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(74, 60, 49, 0.05);
+            border: none; /* 移除邊框 */
+            border-radius: 0; /* 移除圓角，營造原生滿版感 */
+            box-shadow: none; /* 移除陰影 */
             overflow: hidden;
-            border: 1px solid var(--border-color);
+            margin: 0 auto;
         }
 
         .view-section { display: none; animation: fadeIn 0.4s ease-in-out; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 總覽頁樣式 */
-        .overview-header { text-align: center; padding: 20px 20px 10px; }
+        /* 讓詳細頁面保有原本的底色層次 */
+        #view-detail {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+        }
+
+        /* 總覽頁樣式 - 滿版視覺 */
+        .overview-header { text-align: center; padding: 30px 20px 15px; }
         .overview-hint { font-family: var(--font-title); font-size: 16px; color: var(--accent-color); margin: 0; letter-spacing: 1.5px; font-weight: 900; }
-        .interactive-map-wrapper { position: relative; margin: 0 20px 20px; }
-        .interactive-map-wrapper img { width: 100%; display: block; border-radius: 12px; }
+        .interactive-map-wrapper { position: relative; margin: 0; } /* 移除 margin 讓圖片貼齊左右 */
+        .interactive-map-wrapper img { width: 100%; display: block; border-radius: 0; }
         .hotspot { position: absolute; left: 5%; right: 5%; cursor: pointer; background: rgba(255, 255, 255, 0); border-radius: 8px; }
         .hs-1 { top: 25%; height: 12%; }
         .hs-2 { top: 39%; height: 12%; }
@@ -76,67 +83,99 @@
         .desc-content { margin-bottom: 18px; color: var(--text-main); }
         
         /* =========================================
-           V20 核心修改：商品圖文卡片區域
+           V20 核心修改：商品圖文卡片區域 (療癒職人睡感)
            ========================================= */
-        .model-section { text-align: left; margin: 20px 0; }
-        .model-label { font-family: var(--font-title); font-weight: 900; color: var(--accent-color); font-size: 16px; margin-bottom: 15px; display: block; }
+        .model-section { 
+            background: #FAFAF7; /* 增添極淺的溫暖灰底，營造安穩包覆感 */
+            padding: 25px 20px;
+            border-radius: 20px;
+            margin: 30px -10px 10px; /* 稍微向外延伸，打破死板的網格 */
+        }
+        .model-label { 
+            font-family: var(--font-title); 
+            font-weight: 900; 
+            color: var(--text-main); 
+            font-size: 17px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            letter-spacing: 2px;
+        }
+        /* 標題加上溫潤的裝飾線 */
+        .model-label::before, .model-label::after {
+            content: '';
+            height: 1px;
+            background: var(--accent-color);
+            flex-grow: 1;
+            opacity: 0.4;
+        }
         
-        /* 使用 Grid 網格佈局，一行兩列，整齊劃一 */
         .model-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            gap: 15px; 
+            gap: 16px; 
         }
 
         .model-card { 
-            background: #FFF; 
-            border: 1px solid var(--border-color); 
-            border-radius: 12px; 
+            background: #FFFFFF; 
+            border: 1px solid rgba(230, 216, 203, 0.4); /* 極輕柔的邊框 */
+            border-radius: 16px; /* 更圓潤的導角 */
             overflow: hidden; 
             text-decoration: none; 
             display: flex; 
             flex-direction: column; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 10px rgba(74, 60, 49, 0.03);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* 更平滑的懸浮動畫 */
+            box-shadow: 0 8px 25px rgba(122, 107, 93, 0.05); /* 暈開的柔軟陰影 */
         }
         .model-card:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 20px rgba(212, 163, 115, 0.15); 
-            border-color: var(--accent-color); 
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 30px rgba(212, 163, 115, 0.15); 
+            border-color: rgba(212, 163, 115, 0.5); 
         }
 
         /* 產品圖片設定 */
         .model-card-img { 
             width: 100%; 
-            aspect-ratio: 4/3; /* 統一圖片比例為 4:3 */
-            object-fit: cover; /* 確保圖片填滿且不變形 */
-            background: #FDF5E6; /* 圖片載入前的底色 */
-            border-bottom: 1px solid var(--border-color);
+            aspect-ratio: 4/3; 
+            object-fit: cover; 
+            background: #FDF5E6; 
+            border-bottom: none; /* 移除生硬的分界線 */
         }
 
         /* 產品文字區塊設定 */
         .model-card-info { 
-            padding: 12px 10px; 
+            padding: 16px 10px; 
+            background: linear-gradient(to bottom, #FFFFFF, #FDFBF8); /* 微漸層讓文字區塊有呼吸感 */
             text-align: center; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
         .model-card-name { 
             font-family: var(--font-title); 
             font-weight: 900; 
-            color: var(--text-main); 
-            font-size: 15px; 
+            color: #4A3C31; 
+            font-size: 16px; 
+            letter-spacing: 1px;
         }
         .model-card-firmness { 
-            background: #FAF5F0; 
-            color: var(--accent-color); 
+            background: #F4EBE1; /* 調整為更沉穩的暖沙色 */
+            color: #8C6A4F; 
             font-size: 12px; 
-            padding: 3px 10px; 
+            padding: 4px 12px; 
             border-radius: 20px; 
-            font-weight: bold; 
-            border: 1px solid #F0E6DD;
+            font-weight: 500; 
+            letter-spacing: 1px;
+            border: none;
+        }
+
+        /* 商品卡片浮現微動畫 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* 底部轉換區塊 */
@@ -169,7 +208,7 @@
                 <p class="overview-hint">👇 點擊下方硬度分區，探索專屬睡感</p>
             </div>
             <div class="interactive-map-wrapper">
-                <img src="軟硬00.png" alt="床墊硬度總覽">
+                <img src="首圖.png" alt="床墊硬度總覽">
                 <div class="hotspot hs-1" onclick="openDetail(2)"></div>
                 <div class="hotspot hs-2" onclick="openDetail(4)"></div>
                 <div class="hotspot hs-3" onclick="openDetail(6)"></div>
@@ -200,7 +239,7 @@
                         <div id="dynamicFeel" class="desc-content"></div>
                         
                         <span class="desc-label">【適合族群】</span>
-                        <div id="dynamicAudience" class="desc-content"></divＳ>
+                        <div id="dynamicAudience" class="desc-content"></div>
                     </div>
 
                     <div class="model-section">
@@ -231,15 +270,14 @@
     </div>
 
     <script>
-        // 資料結構升級：分離品名與硬度，並加入 img (床墊圖片路徑)
         const data = [
             { 
                 ids: [1,2,3], range: "1 ~ 3 分", img: "1-3_2.png", 
                 feel: "像躺在雲上，整個人陷進去<br>幾乎沒有反作用力，壓力釋放感強", 
                 aud: "習慣側睡、追求包覆安撫感<br>睡覺想「被抱著」感覺的人", 
                 models: [
-                    { name: "極光", firmness: "硬度 3 分", img: "p-aurora.jpg", url: "https://chuangchibed.com/product/aurora/" }, 
-                    { name: "金色矩陣", firmness: "硬度 3.5 分", img: "p-goldenmatrix.jpg", url: "https://chuangchibed.com/product/goldenmatrix/" }
+                    { name: "極光", firmness: "硬度 3 分", img: "p-aurora.png", url: "https://chuangchibed.com/product/aurora/" }, 
+                    { name: "金色矩陣", firmness: "硬度 3.5 分", img: "p-goldenmatrix.png", url: "https://chuangchibed.com/product/goldenmatrix/" }
                 ] 
             },
             { 
@@ -247,9 +285,9 @@
                 feel: "表層柔軟，內部有彈性支撐<br>躺下有包覆，但翻身不費力", 
                 aud: "翻身不多，但不喜歡硬床的人<br>喜歡柔中帶撐的中間路線", 
                 models: [
-                    { name: "獵戶座 2.0", firmness: "硬度 4 分", img: "p-orion2.jpg", url: "https://chuangchibed.com/product/orion/" }, 
-                    { name: "獵戶座", firmness: "硬度 5 分", img: "p-orion.jpg", url: "https://chuangchibed.com/product/1-0/" },
-                    { name: "量子灰", firmness: "硬度 5.5 分", img: "p-qgrey.jpg", url: "https://chuangchibed.com/product/q-grey/" }
+                    { name: "獵戶座 2.0", firmness: "硬度 4 分", img: "p-orion2.png", url: "https://chuangchibed.com/product/orion/" }, 
+                    { name: "獵戶座", firmness: "硬度 5 分", img: "p-orion.png", url: "https://chuangchibed.com/product/1-0/" },
+                    { name: "量子灰", firmness: "硬度 5.5 分", img: "p-qgrey.png", url: "https://chuangchibed.com/product/q-grey/" }
                 ] 
             },
             { 
@@ -257,9 +295,9 @@
                 feel: "睡感Q彈、支撐感明顯、翻身順<br>不會陷太多、不會太挺，睡感很平衡", 
                 aud: "一般體型、翻身中等、沒有特殊睡眠問題<br>想要睡感舒服但也有撐的「剛剛好族」", 
                 models: [
-                    { name: "黑洞力", firmness: "硬度 6 分", img: "p-gravity.jpg", url: "https://chuangchibed.com/product/gravity/" }, 
-                    { name: "流星雨", firmness: "硬度 6 分", img: "p-meteor.jpg", url: "https://chuangchibed.com/product/meteor/" },
-                    { name: "眠宇宙", firmness: "硬度 6.5 分", img: "p-sleep.jpg", url: "https://chuangchibed.com/product/sleep/" }
+                    { name: "黑洞力", firmness: "硬度 6 分", img: "p-gravity.png", url: "https://chuangchibed.com/product/gravity/" }, 
+                    { name: "流星雨", firmness: "硬度 6 分", img: "p-meteor.png", url: "https://chuangchibed.com/product/meteor/" },
+                    { name: "眠宇宙", firmness: "硬度 6.5 分", img: "p-sleep.png", url: "https://chuangchibed.com/product/sleep/" }
                 ] 
             },
             { 
@@ -267,8 +305,8 @@
                 feel: "較硬、有撐，翻身明快、不易晃動<br>床面支撐性強，腰椎不易塌陷", 
                 aud: "體型中等偏壯、長輩喜歡支撐硬感<br>習慣仰睡／腰容易痠痛<br>喜歡穩穩睡、不想陷下去的人", 
                 models: [
-                    { name: "山羊座", firmness: "硬度 7 分", img: "p-goat.jpg", url: "https://chuangchibed.com/product/goat/" }, 
-                    { name: "維京", firmness: "硬度 7 分", img: "p-viking.jpg", url: "https://chuangchibed.com/product/viking/" }
+                    { name: "山羊座", firmness: "硬度 7 分", img: "p-goat.png", url: "https://chuangchibed.com/product/goat/" }, 
+                    { name: "維京", firmness: "硬度 7 分", img: "p-viking.png", url: "https://chuangchibed.com/product/viking/" }
                 ] 
             },
             { 
@@ -276,7 +314,7 @@
                 feel: "幾乎不下陷，極穩定<br>無彈性感，偏日式硬墊體感", 
                 aud: "體型特別重者<br>習慣睡在硬地板、榻榻米類床感", 
                 models: [
-                    { name: "線上訂製款", firmness: "硬度 1~10 分", img: "p-custom.jpg", url: "https://line.me/R/ti/p/@54bed" }
+                    { name: "線上訂製款", firmness: "硬度 1~10 分", img: "p-custom.png", url: "https://line.me/R/ti/p/@54bed" }
                 ] 
             }
         ];
@@ -292,15 +330,17 @@
                 document.getElementById('dynamicFeel').innerHTML = item.feel;
                 document.getElementById('dynamicAudience').innerHTML = item.aud;
                 
-                // 動態生成帶有圖片的商品卡片
                 modelContainer.innerHTML = '';
-                item.models.forEach(model => {
+                item.models.forEach((model, index) => {
                     const card = document.createElement('a');
                     card.href = model.url;
                     card.className = 'model-card';
                     card.target = "_blank";
                     
-                    // 使用 onerror 確保圖片還沒上傳前會有一個預設底圖，避免破版
+                    // 加入交錯浮現的微動畫設定
+                    card.style.opacity = '0';
+                    card.style.animation = `fadeInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards ${index * 0.15}s`;
+                    
                     card.innerHTML = `
                         <img src="${model.img}" alt="${model.name}" class="model-card-img" onerror="this.src='https://placehold.co/400x300/FDF5E6/A38A75?text=床墊圖片準備中'">
                         <div class="model-card-info">
