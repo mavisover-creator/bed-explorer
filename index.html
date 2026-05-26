@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>床奇手工床墊 - 你適合睡軟床還硬床？</title>
+    <title>床奇手工床墊 - 我適合睡軟床還是硬床？</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,33 +18,33 @@
             --font-body: 'Noto Sans TC', sans-serif;
         }
 
+        /* 移除 flex，改為 100% 寬度確保手機版滿版 */
         body {
             font-family: var(--font-body);
-            background-color: var(--card-bg); /* 背景與卡片同色，消弭邊界感 */
+            background-color: var(--card-bg);
             color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            padding: 0; /* 移除原本的 padding 讓首圖貼齊邊緣 */
             margin: 0;
-            box-sizing: border-box;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; 
         }
 
         .explorer-container {
-            max-width: 800px;
             width: 100%;
+            max-width: 800px;
+            margin: 0 auto; /* 電腦版置中，手機版滿版 */
             background: var(--card-bg);
-            border: none; /* 移除邊框 */
-            border-radius: 0; /* 移除圓角，營造原生滿版感 */
-            box-shadow: none; /* 移除陰影 */
+            border: none; 
+            border-radius: 0; 
+            box-shadow: none;
             overflow: hidden;
-            margin: 0 auto;
         }
 
         .view-section { display: none; animation: fadeIn 0.4s ease-in-out; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 讓詳細頁面保有原本的底色層次 */
+        /* 詳細頁面底色層次 */
         #view-detail {
             background-color: var(--bg-color);
             min-height: 100vh;
@@ -53,8 +53,22 @@
         /* 總覽頁樣式 - 滿版視覺 */
         .overview-header { text-align: center; padding: 30px 20px 15px; }
         .overview-hint { font-family: var(--font-title); font-size: 16px; color: var(--accent-color); margin: 0; letter-spacing: 1.5px; font-weight: 900; }
-        .interactive-map-wrapper { position: relative; margin: 0; } /* 移除 margin 讓圖片貼齊左右 */
-        .interactive-map-wrapper img { width: 100%; display: block; border-radius: 0; }
+        
+        /* 確保地圖區塊沒有任何內外距 */
+        .interactive-map-wrapper { 
+            position: relative; 
+            margin: 0; 
+            padding: 0;
+            width: 100%;
+            display: block;
+        } 
+        .interactive-map-wrapper img { 
+            width: 100%; 
+            display: block; 
+            border-radius: 0; 
+            object-fit: cover; 
+        }
+        
         .hotspot { position: absolute; left: 5%; right: 5%; cursor: pointer; background: rgba(255, 255, 255, 0); border-radius: 8px; }
         .hs-1 { top: 25%; height: 12%; }
         .hs-2 { top: 39%; height: 12%; }
@@ -82,14 +96,12 @@
         .desc-label { font-family: var(--font-title); font-weight: 900; color: var(--accent-color); margin-bottom: 8px; display: block; font-size: 17px; border-left: 4px solid var(--accent-color); padding-left: 10px; }
         .desc-content { margin-bottom: 18px; color: var(--text-main); }
         
-        /* =========================================
-           V20 核心修改：商品圖文卡片區域 (療癒職人睡感)
-           ========================================= */
+        /* 療癒職人睡感卡片 */
         .model-section { 
-            background: #FAFAF7; /* 增添極淺的溫暖灰底，營造安穩包覆感 */
+            background: #FAFAF7;
             padding: 25px 20px;
             border-radius: 20px;
-            margin: 30px -10px 10px; /* 稍微向外延伸，打破死板的網格 */
+            margin: 30px -10px 10px; 
         }
         .model-label { 
             font-family: var(--font-title); 
@@ -103,7 +115,6 @@
             gap: 12px;
             letter-spacing: 2px;
         }
-        /* 標題加上溫潤的裝飾線 */
         .model-label::before, .model-label::after {
             content: '';
             height: 1px;
@@ -120,14 +131,14 @@
 
         .model-card { 
             background: #FFFFFF; 
-            border: 1px solid rgba(230, 216, 203, 0.4); /* 極輕柔的邊框 */
-            border-radius: 16px; /* 更圓潤的導角 */
+            border: 1px solid rgba(230, 216, 203, 0.4);
+            border-radius: 16px; 
             overflow: hidden; 
             text-decoration: none; 
             display: flex; 
             flex-direction: column; 
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* 更平滑的懸浮動畫 */
-            box-shadow: 0 8px 25px rgba(122, 107, 93, 0.05); /* 暈開的柔軟陰影 */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            box-shadow: 0 8px 25px rgba(122, 107, 93, 0.05); 
         }
         .model-card:hover { 
             transform: translateY(-4px); 
@@ -135,19 +146,17 @@
             border-color: rgba(212, 163, 115, 0.5); 
         }
 
-        /* 產品圖片設定 */
         .model-card-img { 
             width: 100%; 
             aspect-ratio: 4/3; 
             object-fit: cover; 
             background: #FDF5E6; 
-            border-bottom: none; /* 移除生硬的分界線 */
+            border-bottom: none; 
         }
 
-        /* 產品文字區塊設定 */
         .model-card-info { 
             padding: 16px 10px; 
-            background: linear-gradient(to bottom, #FFFFFF, #FDFBF8); /* 微漸層讓文字區塊有呼吸感 */
+            background: linear-gradient(to bottom, #FFFFFF, #FDFBF8); 
             text-align: center; 
             display: flex;
             flex-direction: column;
@@ -162,7 +171,7 @@
             letter-spacing: 1px;
         }
         .model-card-firmness { 
-            background: #F4EBE1; /* 調整為更沉穩的暖沙色 */
+            background: #F4EBE1; 
             color: #8C6A4F; 
             font-size: 12px; 
             padding: 4px 12px; 
@@ -172,7 +181,6 @@
             border: none;
         }
 
-        /* 商品卡片浮現微動畫 */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -337,7 +345,6 @@
                     card.className = 'model-card';
                     card.target = "_blank";
                     
-                    // 加入交錯浮現的微動畫設定
                     card.style.opacity = '0';
                     card.style.animation = `fadeInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards ${index * 0.15}s`;
                     
