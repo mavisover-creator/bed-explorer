@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>床奇手工床墊 - 睡感探索 V20 (圖文導購版)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FAF5F0;
+            --card-bg: #FFFFFF;
+            --text-main: #4A3C31;
+            --text-light: #7A6B5D;
+            --accent-color: #D4A373;
+            --line-green: #06C755;
+            --border-color: #E6D8CB;
+            --font-title: 'Noto Serif TC', serif;
+            --font-body: 'Noto Sans TC', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 20px 10px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .explorer-container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(74, 60, 49, 0.05);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .view-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 總覽頁樣式 */
+        .overview-header { text-align: center; padding: 20px 20px 10px; }
+        .overview-hint { font-family: var(--font-title); font-size: 16px; color: var(--accent-color); margin: 0; letter-spacing: 1.5px; font-weight: 900; }
+        .interactive-map-wrapper { position: relative; margin: 0 20px 20px; }
+        .interactive-map-wrapper img { width: 100%; display: block; border-radius: 12px; }
+        .hotspot { position: absolute; left: 5%; right: 5%; cursor: pointer; background: rgba(255, 255, 255, 0); border-radius: 8px; }
+        .hs-1 { top: 25%; height: 12%; }
+        .hs-2 { top: 39%; height: 12%; }
+        .hs-3 { top: 53%; height: 12%; }
+        .hs-4 { top: 67%; height: 12%; }
+        .hs-5 { top: 81%; height: 12%; }
+
+        /* 詳細頁樣式 */
+        .detail-topbar { padding: 12px 20px; background: #FDF5E6; display: flex; align-items: center; }
+        .btn-back { background: #FFF; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: bold; color: var(--text-main); transition: background 0.2s; }
+        .btn-back:hover { background: var(--border-color); }
+
+        .slider-section { padding: 15px 20px 10px; text-align: center; }
+        .slider-value { font-family: var(--font-title); font-size: 22px; font-weight: 900; color: var(--accent-color); margin-bottom: 5px; }
+        .slider-instruction { font-size: 13px; color: #A38A75; margin-bottom: 10px; letter-spacing: 1px; }
+        input[type=range] { -webkit-appearance: none; width: 85%; max-width: 400px; height: 6px; background: #E8DCCB; border-radius: 5px; outline: none; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; background: #FFF; border: 3px solid var(--accent-color); border-radius: 50%; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .content-display { display: flex; flex-direction: column; align-items: center; padding: 0 25px 20px; text-align: center; }
+        .image-container { width: 100%; height: auto; display: flex; justify-content: center; align-items: center; margin-bottom: 5px; padding: 5px 0; }
+        .image-container img { width: 75%; max-width: 500px; height: auto; object-fit: contain; image-rendering: -webkit-optimize-contrast; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05)); }
+
+        .info-card { max-width: 600px; width: 100%; }
+        .desc-box { background: #FFFDFB; border: 1px solid #F0E6DD; border-radius: 12px; padding: 22px; margin-bottom: 15px; line-height: 1.8; text-align: left; font-size: 15px; }
+        .desc-label { font-family: var(--font-title); font-weight: 900; color: var(--accent-color); margin-bottom: 8px; display: block; font-size: 17px; border-left: 4px solid var(--accent-color); padding-left: 10px; }
+        .desc-content { margin-bottom: 18px; color: var(--text-main); }
+        
+        /* =========================================
+           V20 核心修改：商品圖文卡片區域
+           ========================================= */
+        .model-section { text-align: left; margin: 20px 0; }
+        .model-label { font-family: var(--font-title); font-weight: 900; color: var(--accent-color); font-size: 16px; margin-bottom: 15px; display: block; }
+        
+        /* 使用 Grid 網格佈局，一行兩列，整齊劃一 */
+        .model-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+        }
+
+        .model-card { 
+            background: #FFF; 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            text-decoration: none; 
+            display: flex; 
+            flex-direction: column; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 10px rgba(74, 60, 49, 0.03);
+        }
+        .model-card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(212, 163, 115, 0.15); 
+            border-color: var(--accent-color); 
+        }
+
+        /* 產品圖片設定 */
+        .model-card-img { 
+            width: 100%; 
+            aspect-ratio: 4/3; /* 統一圖片比例為 4:3 */
+            object-fit: cover; /* 確保圖片填滿且不變形 */
+            background: #FDF5E6; /* 圖片載入前的底色 */
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* 產品文字區塊設定 */
+        .model-card-info { 
+            padding: 12px 10px; 
+            text-align: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .model-card-name { 
+            font-family: var(--font-title); 
+            font-weight: 900; 
+            color: var(--text-main); 
+            font-size: 15px; 
+        }
+        .model-card-firmness { 
+            background: #FAF5F0; 
+            color: var(--accent-color); 
+            font-size: 12px; 
+            padding: 3px 10px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+            border: 1px solid #F0E6DD;
+        }
+
+        /* 底部轉換區塊 */
+        .cta-section { padding: 30px 20px; background: #FAF5F0; border-top: 1px dashed var(--border-color); text-align: center; }
+        .brand-footer { margin-bottom: 25px; }
+        .brand-name { font-family: var(--font-title); font-size: 20px; font-weight: 900; color: var(--text-main); margin-bottom: 12px; letter-spacing: 4px; display: block; }
+        .promises-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; padding-bottom: 25px; border-bottom: 1px solid var(--border-color); }
+        .promise-item { font-family: var(--font-title); font-size: 13px; font-weight: 700; color: var(--text-light); display: flex; align-items: center; gap: 5px; letter-spacing: 1px; }
+        .promise-item::before { content: '●'; color: var(--accent-color); font-size: 8px; }
+
+        .conversion-area { margin-top: 25px; }
+        .btn-line { background: var(--line-green); color: #FFF; text-decoration: none; padding: 15px 50px; border-radius: 50px; font-weight: bold; display: inline-block; font-size: 18px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(6, 199, 85, 0.2); }
+        .btn-line:hover { transform: scale(1.03); }
+        .gift-info-link { text-decoration: none; color: #FF5722; font-size: 14px; font-weight: bold; margin-top: 15px; display: block; letter-spacing: 1px;}
+
+        @media (max-width: 768px) {
+            .content-display { padding: 0 10px 20px; }
+            .image-container { padding: 0; }
+            .image-container img { width: 100%; max-width: none; }
+            .desc-box { padding: 18px 15px; }
+            .btn-line { padding: 15px 30px; font-size: 16px; width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="explorer-container">
+        <div id="view-overview" class="view-section active">
+            <div class="overview-header">
+                <p class="overview-hint">👇 點擊下方硬度分區，探索專屬睡感</p>
+            </div>
+            <div class="interactive-map-wrapper">
+                <img src="軟硬00.png" alt="床墊硬度總覽">
+                <div class="hotspot hs-1" onclick="openDetail(2)"></div>
+                <div class="hotspot hs-2" onclick="openDetail(4)"></div>
+                <div class="hotspot hs-3" onclick="openDetail(6)"></div>
+                <div class="hotspot hs-4" onclick="openDetail(7)"></div>
+                <div class="hotspot hs-5" onclick="openDetail(9)"></div>
+            </div>
+        </div>
+
+        <div id="view-detail" class="view-section">
+            <div class="detail-topbar">
+                <button class="btn-back" onclick="goBackToOverview()">◀ 返回大圖總覽</button>
+            </div>
+
+            <div class="slider-section">
+                <div id="sliderText" class="slider-value">當前硬度：1 ~ 3 分</div>
+                <div class="slider-instruction">左右滑動探索不同硬度睡感</div>
+                <input type="range" min="1" max="10" step="1" value="2" id="firmnessSlider">
+            </div>
+
+            <div class="content-display">
+                <div class="image-container">
+                    <img id="dynamicImage" src="1-3_2.png" alt="人體睡姿示意" onerror="this.onerror=null; this.src='https://placehold.co/400x200/FDF5E6/A38A75?text=圖片路徑錯誤';">
+                </div>
+
+                <div class="info-card">
+                    <div class="desc-box">
+                        <span class="desc-label">【睡感特色】</span>
+                        <div id="dynamicFeel" class="desc-content"></div>
+                        
+                        <span class="desc-label">【適合族群】</span>
+                        <div id="dynamicAudience" class="desc-content"></divＳ>
+                    </div>
+
+                    <div class="model-section">
+                        <span class="model-label">✨ 適合你的床墊</span>
+                        <div class="model-grid" id="modelContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="brand-footer">
+                    <div class="brand-name">床奇手工床墊</div>
+                    <div class="promises-container">
+                        <div class="promise-item">台灣工廠直營</div>
+                        <div class="promise-item">專屬客製</div>
+                        <div class="promise-item">10年保固</div>
+                        <div class="promise-item">無壓力試躺</div>
+                        <div class="promise-item">免費配送</div>
+                    </div>
+                </div>
+
+                <div class="conversion-area">
+                    <a href="https://line.me/R/ti/p/@54bed" class="btn-line" target="_blank">加入 LINE 預約試躺</a>
+                    <a href="https://line.me/R/ti/p/@54bed" class="gift-info-link" target="_blank">🎁 加入 LINE 領取 300 元購物金</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 資料結構升級：分離品名與硬度，並加入 img (床墊圖片路徑)
+        const data = [
+            { 
+                ids: [1,2,3], range: "1 ~ 3 分", img: "1-3_2.png", 
+                feel: "像躺在雲上，整個人陷進去<br>幾乎沒有反作用力，壓力釋放感強", 
+                aud: "習慣側睡、追求包覆安撫感<br>睡覺想「被抱著」感覺的人", 
+                models: [
+                    { name: "極光", firmness: "硬度 3 分", img: "p-aurora.jpg", url: "https://chuangchibed.com/product/aurora/" }, 
+                    { name: "金色矩陣", firmness: "硬度 3.5 分", img: "p-goldenmatrix.jpg", url: "https://chuangchibed.com/product/goldenmatrix/" }
+                ] 
+            },
+            { 
+                ids: [4,5], range: "4 ~ 5 分", img: "4-5_2.png", 
+                feel: "表層柔軟，內部有彈性支撐<br>躺下有包覆，但翻身不費力", 
+                aud: "翻身不多，但不喜歡硬床的人<br>喜歡柔中帶撐的中間路線", 
+                models: [
+                    { name: "獵戶座 2.0", firmness: "硬度 4 分", img: "p-orion2.jpg", url: "https://chuangchibed.com/product/orion/" }, 
+                    { name: "獵戶座", firmness: "硬度 5 分", img: "p-orion.jpg", url: "https://chuangchibed.com/product/1-0/" },
+                    { name: "量子灰", firmness: "硬度 5.5 分", img: "p-qgrey.jpg", url: "https://chuangchibed.com/product/q-grey/" }
+                ] 
+            },
+            { 
+                ids: [6], range: "6 ~ 6.5 分", img: "6.65_2.png", 
+                feel: "睡感Q彈、支撐感明顯、翻身順<br>不會陷太多、不會太挺，睡感很平衡", 
+                aud: "一般體型、翻身中等、沒有特殊睡眠問題<br>想要睡感舒服但也有撐的「剛剛好族」", 
+                models: [
+                    { name: "黑洞力", firmness: "硬度 6 分", img: "p-gravity.jpg", url: "https://chuangchibed.com/product/gravity/" }, 
+                    { name: "流星雨", firmness: "硬度 6 分", img: "p-meteor.jpg", url: "https://chuangchibed.com/product/meteor/" },
+                    { name: "眠宇宙", firmness: "硬度 6.5 分", img: "p-sleep.jpg", url: "https://chuangchibed.com/product/sleep/" }
+                ] 
+            },
+            { 
+                ids: [7,8], range: "7 ~ 8 分", img: "7-8_2.png", 
+                feel: "較硬、有撐，翻身明快、不易晃動<br>床面支撐性強，腰椎不易塌陷", 
+                aud: "體型中等偏壯、長輩喜歡支撐硬感<br>習慣仰睡／腰容易痠痛<br>喜歡穩穩睡、不想陷下去的人", 
+                models: [
+                    { name: "山羊座", firmness: "硬度 7 分", img: "p-goat.jpg", url: "https://chuangchibed.com/product/goat/" }, 
+                    { name: "維京", firmness: "硬度 7 分", img: "p-viking.jpg", url: "https://chuangchibed.com/product/viking/" }
+                ] 
+            },
+            { 
+                ids: [9,10], range: "9 ~ 10 分", img: "9-10_2.png", 
+                feel: "幾乎不下陷，極穩定<br>無彈性感，偏日式硬墊體感", 
+                aud: "體型特別重者<br>習慣睡在硬地板、榻榻米類床感", 
+                models: [
+                    { name: "線上訂製款", firmness: "硬度 1~10 分", img: "p-custom.jpg", url: "https://line.me/R/ti/p/@54bed" }
+                ] 
+            }
+        ];
+
+        const slider = document.getElementById('firmnessSlider');
+        const modelContainer = document.getElementById('modelContainer');
+        
+        function updatePage(val) {
+            const item = data.find(d => d.ids.includes(val));
+            if(item) {
+                document.getElementById('sliderText').innerText = `當前硬度：${item.range}`;
+                document.getElementById('dynamicImage').src = item.img;
+                document.getElementById('dynamicFeel').innerHTML = item.feel;
+                document.getElementById('dynamicAudience').innerHTML = item.aud;
+                
+                // 動態生成帶有圖片的商品卡片
+                modelContainer.innerHTML = '';
+                item.models.forEach(model => {
+                    const card = document.createElement('a');
+                    card.href = model.url;
+                    card.className = 'model-card';
+                    card.target = "_blank";
+                    
+                    // 使用 onerror 確保圖片還沒上傳前會有一個預設底圖，避免破版
+                    card.innerHTML = `
+                        <img src="${model.img}" alt="${model.name}" class="model-card-img" onerror="this.src='https://placehold.co/400x300/FDF5E6/A38A75?text=床墊圖片準備中'">
+                        <div class="model-card-info">
+                            <span class="model-card-name">${model.name}</span>
+                            <span class="model-card-firmness">${model.firmness}</span>
+                        </div>
+                    `;
+                    modelContainer.appendChild(card);
+                });
+            }
+        }
+
+        slider.addEventListener('input', (e) => updatePage(parseInt(e.target.value)));
+
+        function openDetail(val) {
+            document.getElementById('view-overview').classList.remove('active');
+            document.getElementById('view-detail').classList.add('active');
+            slider.value = val;
+            updatePage(val);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goBackToOverview() {
+            document.getElementById('view-detail').classList.remove('active');
+            document.getElementById('view-overview').classList.add('active');
+        }
+    </script>
+</body>
+</html>
